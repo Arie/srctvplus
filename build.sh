@@ -29,9 +29,9 @@ CXXFLAGS="$CXXFLAGS -I${SDKPATH}/game/server"
 CXXFLAGS="$CXXFLAGS -I${TFTRUEPATH}/FunctionRoute/"
 
 LDFLAGS="$LDFLAGS -lrt -lm -ldl -m32 -flto -shared -fPIC -static-libgcc -static-libstdc++"
-LDFLAGS="$LDFLAGS -Wl,--version-script=version-script"
+LDFLAGS="$LDFLAGS -Wl,--version-script=version-script -Wl,-z,noexecstack"
 
-OBJS="$OBJS -L${SDKPATH}/lib/linux/ -ltier0_srv -lvstdlib_srv"
+OBJS="$OBJS -L${SDKPATH}/lib/linux/ -Wl,--no-as-needed -ltier0_srv -lvstdlib_srv"
 OBJS="$OBJS ${SDKPATH}/lib/linux/tier1_i486.a"
 OBJS="$OBJS ${SDKPATH}/lib/linux/tier2_i486.a"
 OBJS="$OBJS ${SDKPATH}/lib/linux/mathlib_i486.a"
@@ -39,4 +39,4 @@ OBJS="$OBJS ${TFTRUEPATH}/FunctionRoute/FunctionRoute.a"
 
 set -x
 g++ $CXXFLAGS -c -o srctvplus.o srctvplus.cpp
-gcc $CXXFLAGS $LDFLAGS -o srctvplus.so srctvplus.o $OBJS
+g++ $CXXFLAGS $LDFLAGS -o srctvplus.so srctvplus.o $OBJS
